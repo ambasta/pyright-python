@@ -11,7 +11,7 @@ include = [
 exclude = [
     "pyright/_mureq.py"
 ]
-pythonVersion = "3.9"
+pythonVersion = "3.11"
 
 typeCheckingMode = "strict"
 
@@ -23,3 +23,46 @@ reportPrivateUsage = false
 # errors anyway
 reportCallInDefaultInitializer = true
 reportImplicitStringConcatenation = true
+
+[tool.poetry]
+name = "pyright-python"
+version = "0.0.0"
+description = "Python command line wrapper for pyright, a static type checker"
+authors = ["Robert Craigie"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "pyright"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+nodeenv = "^1.7.0"
+twine = {version = "^4.0.2", optional = true}
+ipdb = {version = "^0.13.11", optional = true}
+requests = "^2.28.2"
+
+[tool.poetry.extras]
+dev = ['twine']
+debug = ['ipdb']
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+isort = "^5.12.0"
+tox = "^4.4.5"
+wheel = "^0.38.4"
+
+[tool.poetry.scripts]
+pyright = 'pyright.server:main'
+pyright-python = 'pyright.server:main'
+pyright-langserver = 'pyright.server:main'
+pyright-python-langserver = 'pyright.server:main'
+# pyright = "pyright.cli:entrypoint"
+# pyright-python = "pyright.cli:entrypoint"
+# pyright-langserver="pyright.langserver:entrypoint"
+# pyright-python-langserver="pyright.langserver:entrypoint"
+
+[tool.poetry-dynamic-versioning]
+enable = true
+
+[build-system]
+requires = ["poetry-core", "poetry-dynamic-versioning"]
+build-backend = "poetry_dynamic_versioning.backend"

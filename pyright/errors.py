@@ -1,6 +1,6 @@
-from pathlib import Path
+from typing import Iterable, Optional
 
-from .types import Target
+from pyright.types import PackageManager
 
 
 class PyrightError(Exception):
@@ -15,13 +15,16 @@ class NodeError(PyrightError):
     pass
 
 
-class BinaryNotFound(NodeError):
-    def __init__(self, target: Target, path: Path) -> None:
+class NoUsablePackageManager(PyrightError):
+    pass
+
+
+class UnsupportedPackageManager(PyrightError):
+    def __init__(self, manager: Optional[str], supported: Iterable[PackageManager]):
         super().__init__(
-            f'Expected {target} binary to exist at {path} but was not found.'
+            f'Unsupported package manager `{manager}` specified. Supported pacakge managers are ${", ".join(supported)}'
         )
-        self.path = path
-        self.target = target
+        pass
 
 
 class VersionCheckFailed(NodeError):
